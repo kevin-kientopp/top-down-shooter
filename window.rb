@@ -11,7 +11,10 @@ class Window < Gosu::Window
 	end
 	
 	def update
-		
+		@player.move_left if button_down? Gosu::KbLeft
+		@player.move_right if button_down? Gosu::KbRight
+		@player.move_up if button_down? Gosu::KbUp
+		@player.move_down if button_down? Gosu::KbDown
 	end
 
 	def draw
