@@ -5,6 +5,9 @@ class Window < Gosu::Window
 	def initialize
 		super WIDTH, HEIGHT, false
 		self.caption = 'Sexy Vampire Shooter'
+
+		@player = Player.new(self, Gosu::Image.new(self, 'media/player.png', true))
+		@player.warp(320, 240)
 	end
 	
 	def update
@@ -12,7 +15,7 @@ class Window < Gosu::Window
 	end
 
 	def draw
-		
+		@player.draw
 	end
 
 	def button_down(id)
