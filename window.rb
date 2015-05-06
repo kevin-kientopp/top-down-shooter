@@ -9,8 +9,6 @@ class Window < Gosu::Window
     @player = Player.new(self, Gosu::Image.new(self, 'media/player.png', true))
     @player.warp(Level::WIDTH/2.0, Level::HEIGHT/2.0)
 
-    puts Level::WIDTH/4.0
-
     tile_images = Array.new
     tile_images.push Gosu::Image.new(self, 'media/tile.png', true)
     tile_images.push Gosu::Image.new(self, 'media/tile2.png', true)
@@ -19,10 +17,10 @@ class Window < Gosu::Window
   end
 
   def update
-    @player.move_left if button_down? Gosu::KbLeft
-    @player.move_right if button_down? Gosu::KbRight
-    @player.move_up if button_down? Gosu::KbUp
-    @player.move_down if button_down? Gosu::KbDown
+    @player.move_left if button_down? Gosu::KbLeft unless @player.x < 0
+    @player.move_right if button_down? Gosu::KbRight unless @player.x > Level::WIDTH
+    @player.move_up if button_down? Gosu::KbUp unless @player.y < 0
+    @player.move_down if button_down? Gosu::KbDown unless @player.y > Level::HEIGHT
   end
 
   def draw
