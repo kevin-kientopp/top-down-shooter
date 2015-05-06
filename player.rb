@@ -1,5 +1,7 @@
 class Player
-  VELOCITY = 3
+  VELOCITY = 1
+
+  attr_reader :x, :y
 
   def initialize(window, image)
     @image = image
@@ -16,22 +18,22 @@ class Player
   end
 
   def move_up
-    @y -= 1
+    @y -= VELOCITY
     @angle = 180.0
   end
 
   def move_down
-    @y += 1
+    @y += VELOCITY
     @angle = 0.0
   end
 
   def move_left
-    @x -= 1
+    @x -= VELOCITY
     @angle = 90.0
   end
 
   def move_right
-    @x += 1
+    @x += VELOCITY
     @angle = 270.0
   end
 end

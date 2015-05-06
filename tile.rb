@@ -1,4 +1,7 @@
 class Tile
+  WIDTH = 100
+  HEIGHT = 100
+
   def initialize(x, y, image)
     @x, @y, @image = x, y, image
   end
