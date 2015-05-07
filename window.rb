@@ -30,10 +30,6 @@ class Window < Gosu::Window
     end
   end
 
-  def button_down(id)
-
-  end
-
   private
   def calculate_camera_translation(axis_position, axis_screen_size, axis_level_size)
     return 0 if axis_position < axis_screen_size/2.0
