@@ -24,7 +24,7 @@ class Window < Gosu::Window
   end
 
   def draw
-    translate(WIDTH/2.0-@player.x, HEIGHT/2.0-@player.y) do
+    translate(calculate_camera_translation(@player.x, WIDTH, Level::WIDTH), calculate_camera_translation(@player.y, HEIGHT, Level::HEIGHT)) do
       @player.draw
       @level.draw
     end
@@ -32,5 +32,12 @@ class Window < Gosu::Window
 
   def button_down(id)
 
+  end
+
+  private
+  def calculate_camera_translation(axis_position, axis_screen_size, axis_level_size)
+    return 0 if axis_position < axis_screen_size/2.0
+    return -axis_level_size + axis_screen_size if axis_position > axis_level_size - axis_screen_size/2.0
+    return axis_screen_size/2.0 - axis_position
   end
 end
