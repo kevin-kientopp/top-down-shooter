@@ -1,7 +1,7 @@
 class Player
   VELOCITY = 1
 
-  attr_reader :x, :y
+  attr_reader :x, :y, :angle
 
   def initialize(window, image)
     @image = image
