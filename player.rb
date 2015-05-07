@@ -3,7 +3,7 @@ class Player
 
   attr_reader :x, :y, :angle
 
-  def initialize(window, image)
+  def initialize(image)
     @image = image
     @x = @y = 0.0
     @angle = 0.0
