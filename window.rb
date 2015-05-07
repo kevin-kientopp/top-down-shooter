@@ -6,7 +6,7 @@ class Window < Gosu::Window
     super WIDTH, HEIGHT, false
     self.caption = 'Sexy Vampire Shooter'
 
-    @player = Player.new(Gosu::Image.new(self, 'media/player.png', true))
+    @player = Player.new(Gosu::Image.load_tiles(self, 'media/player.png', 16, 21, true))
     @player.warp(Level::WIDTH/2.0, Level::HEIGHT/2.0)
 
     tile_images = Array.new
