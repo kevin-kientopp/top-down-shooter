@@ -6,16 +6,16 @@ class Window < Gosu::Window
     super WIDTH, HEIGHT, false
     self.caption = 'Sexy Vampire Shooter'
 
-    @player = Player.new(Gosu::Image.load_tiles(self, 'media/player.png', 16, 21, true))
+    @player = Player.new(Gosu::Image.load_tiles(self, '../media/player.png', 16, 21, true))
     @player.warp(Level::WIDTH/2.0, Level::HEIGHT/2.0)
 
     tile_images = Array.new
-    tile_images.push Gosu::Image.new(self, 'media/tile.png', true)
-    tile_images.push Gosu::Image.new(self, 'media/tile2.png', true)
+    tile_images.push Gosu::Image.new(self, '../media/tile.png', true)
+    tile_images.push Gosu::Image.new(self, '../media/tile2.png', true)
 
     @level = Level.new tile_images
 
-    @bullet_image = Gosu::Image.new(self, 'media/bullet.png', true)
+    @bullet_image = Gosu::Image.new(self, '../media/bullet.png', true)
     @bullets = Array.new
   end
 
