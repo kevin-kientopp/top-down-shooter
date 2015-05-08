@@ -1,3 +1,5 @@
+require_relative 'tile'
+
 class Level
   WIDTH = 20*Tile::WIDTH
   HEIGHT = 20*Tile::HEIGHT
@@ -9,5 +11,4 @@ class Level
   def draw
     @tiles.flatten.each { |e| e.draw }
   end
-
 end
