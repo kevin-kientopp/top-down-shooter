@@ -1,6 +1,8 @@
 class Bullet
   VELOCITY = 2
 
+  attr_reader :x, :y
+
   def initialize(x, y, angle, image)
     @x, @y, @angle, @image = x, y, angle, image
   end
