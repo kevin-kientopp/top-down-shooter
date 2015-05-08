@@ -21,25 +21,25 @@ class Player
 
   def move_up
     @y -= VELOCITY
-    @angle = 180.0
+    @angle = 0.0
     alternate_index if frame_expired?
   end
 
   def move_down
     @y += VELOCITY
-    @angle = 0.0
+    @angle = 180.0
     alternate_index if frame_expired?
   end
 
   def move_left
     @x -= VELOCITY
-    @angle = 90.0
+    @angle = 270.0
     alternate_index if frame_expired?
   end
 
   def move_right
     @x += VELOCITY
-    @angle = 270.0
+    @angle = 90.0
     alternate_index if frame_expired?
   end
 

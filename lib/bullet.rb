@@ -13,14 +13,14 @@ class Bullet
 
   def move
     case @angle
-    when 0 #down
-      @y += VELOCITY
-    when 90 #left
-      @x -= VELOCITY
-    when 180 #up
+    when 0 #up
       @y -= VELOCITY
-    when 270 #right
+    when 90 #right
       @x += VELOCITY
+    when 180 #down
+      @y += VELOCITY
+    when 270 #left
+      @x -= VELOCITY
     end
   end
 end

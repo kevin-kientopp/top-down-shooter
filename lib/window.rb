@@ -6,16 +6,16 @@ class Window < Gosu::Window
     super WIDTH, HEIGHT, false
     self.caption = 'Sexy Vampire Shooter'
 
-    @player = Player.new(Gosu::Image.load_tiles(self, '../media/player.png', 16, 21, true))
+    @player = Player.new(Gosu::Image.load_tiles(self, './media/player.png', 16, 21, true))
     @player.warp(Level::WIDTH/2.0, Level::HEIGHT/2.0)
 
     tile_images = Array.new
-    tile_images.push Gosu::Image.new(self, '../media/tile.png', true)
-    tile_images.push Gosu::Image.new(self, '../media/tile2.png', true)
+    tile_images.push Gosu::Image.new(self, './media/tile.png', true)
+    tile_images.push Gosu::Image.new(self, './media/tile2.png', true)
 
     @level = Level.new tile_images
 
-    @bullet_image = Gosu::Image.new(self, '../media/bullet.png', true)
+    @bullet_image = Gosu::Image.new(self, './media/bullet.png', true)
     @bullets = Array.new
   end
 
@@ -55,17 +55,17 @@ class Window < Gosu::Window
     x, y = @player.x, @player.y
 
     case @player.angle
-    when 0 #down
+    when 0 #up
       x -= gun_offset
-      y += distance_from_player
-    when 90 #left
-      x -= distance_from_player
-      y -= gun_offset
-    when 180 #up
-      x += gun_offset
       y -= distance_from_player
-    when 270 #right
+    when 90 #right
       x += distance_from_player
+      y -= gun_offset
+    when 180 #down
+      x += gun_offset
+      y += distance_from_player
+    when 270 #left
+      x -= distance_from_player
       y += gun_offset
     end
 
