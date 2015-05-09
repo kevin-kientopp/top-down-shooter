@@ -1,7 +1,7 @@
-require 'test/unit'
+require 'minitest/autorun'
 require 'top_down_shooter/bullet.rb'
 
-class TestBullet < Test::Unit::TestCase
+class TestBullet < Minitest::Test
   def test_move_down
     bullet = Bullet.new(0, 5, 180, nil)
     bullet.move

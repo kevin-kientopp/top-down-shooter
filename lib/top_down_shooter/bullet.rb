@@ -1,3 +1,5 @@
+require 'gosu'
+
 class Bullet
   VELOCITY = 2
 
@@ -12,15 +14,7 @@ class Bullet
   end
 
   def move
-    case @angle
-    when 0 #up
-      @y -= VELOCITY
-    when 90 #right
-      @x += VELOCITY
-    when 180 #down
-      @y += VELOCITY
-    when 270 #left
-      @x -= VELOCITY
-    end
+    @x += Gosu.offset_x(@angle, VELOCITY)
+    @y += Gosu.offset_y(@angle, VELOCITY)  
   end
 end
