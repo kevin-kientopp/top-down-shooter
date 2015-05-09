@@ -22,6 +22,8 @@ class Window < Gosu::Window
 
     @bullet_image = Gosu::Image.new(self, 'media/bullet.png', true)
     @bullets = Array.new
+
+    @gun_sample = Gosu::Sample.new(self, 'media/Colt1911_1.ogg')
   end
 
   def update
@@ -41,9 +43,13 @@ class Window < Gosu::Window
   end
 
   def button_down(id)
-    x, y = calculate_bullet_start_position
+    if id == Gosu::KbSpace
+      @gun_sample.play
 
-    @bullets.push Bullet.new(x, y, @player.angle, @bullet_image) if id == Gosu::KbSpace
+      x, y = calculate_bullet_start_position
+
+      @bullets.push Bullet.new(x, y, @player.angle, @bullet_image)
+    end
   end
 
   private
