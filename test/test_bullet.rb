@@ -1,5 +1,5 @@
-require "./lib/bullet.rb"
-require "test/unit"
+require 'test/unit'
+require 'top_down_shooter/bullet.rb'
 
 class TestBullet < Test::Unit::TestCase
   def test_move_down
