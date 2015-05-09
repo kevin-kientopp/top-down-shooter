@@ -1,6 +1,6 @@
 require_relative 'top_down_shooter/window'
 
-class Top_Down_Shooter
+class TopDownShooter
   def self.run
     window = Window.new
     window.show

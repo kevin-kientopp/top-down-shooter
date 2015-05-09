@@ -1,4 +1,4 @@
 #!/usr/bin/env ruby
 
 require_relative '../lib/top_down_shooter'
-Top_Down_Shooter.run
+TopDownShooter.run
