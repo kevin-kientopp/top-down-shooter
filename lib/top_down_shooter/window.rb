@@ -7,6 +7,8 @@ class Window < Gosu::Window
   WIDTH = 640
   HEIGHT = 480
 
+  attr_reader :bullets
+
   def initialize
     super WIDTH, HEIGHT, false
     self.caption = 'Sexy Vampire Shooter'
