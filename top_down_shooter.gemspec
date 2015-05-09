@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = "top_down_shooter"
-  s.version     = '1.0'
+  s.version     = '0.0.0'
   s.executables << 'top_down_shooter'
   s.summary     = "A top-down-shooter."
   s.description = "A top-down-shooter being created for fun."
