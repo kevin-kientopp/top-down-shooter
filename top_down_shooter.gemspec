@@ -7,6 +7,6 @@ Gem::Specification.new do |s|
   s.authors  	= ["Kevin Kientopp", "John McCarthy"]
   s.email    	= ["kevinkientopp@gmail.com"]
   s.homepage 	= "https://github.com/kevin-kientopp/top-down-shooter"
-  s.files    	= ["lib/top_down_shooter.rb", "lib/top_down_shooter/bullet.rb", "lib/top_down_shooter/level.rb", "lib/top_down_shooter/player.rb", "lib/top_down_shooter/tile.rb", "lib/top_down_shooter/window.rb"]   
+  s.files    	= ["lib/top_down_shooter.rb", "lib/top_down_shooter/bullet.rb", "lib/top_down_shooter/debris.rb", "lib/top_down_shooter/level.rb", "lib/top_down_shooter/player.rb", "lib/top_down_shooter/tile.rb", "lib/top_down_shooter/window.rb"]   
   s.license 	= 'MIT'
 end
