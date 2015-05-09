@@ -20,7 +20,9 @@ class Window < Gosu::Window
     tile_images.push Gosu::Image.new(self, 'media/tile.png', true)
     tile_images.push Gosu::Image.new(self, 'media/tile2.png', true)
 
-    @level = Level.new self, tile_images
+    debris_images = Gosu::Image.load_tiles(self, 'media/debris_rocks.png', 58, 60, true)
+
+    @level = Level.new tile_images, debris_images
 
     @bullet_image = Gosu::Image.new(self, 'media/bullet.png', true)
     @bullets = Array.new
