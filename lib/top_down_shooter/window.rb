@@ -7,7 +7,7 @@ class Window < Gosu::Window
   WIDTH = 640
   HEIGHT = 480
 
-  attr_reader :bullets
+  attr_reader :bullets, :player
 
   def initialize
     super WIDTH, HEIGHT, false
