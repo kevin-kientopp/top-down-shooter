@@ -8,10 +8,13 @@ class Window < Gosu::Window
   HEIGHT = 480
 
   attr_reader :bullets, :player
+  attr_accessor :sounds_enabled
 
   def initialize
     super WIDTH, HEIGHT, false
     self.caption = 'Sexy Vampire Shooter'
+
+    @sounds_enabled = true
 
     @player = Player.new(Gosu::Image.load_tiles(self, 'media/player.png', 16, 21, true))
     @player.warp(Level::WIDTH/2.0, Level::HEIGHT/2.0)
@@ -48,7 +51,7 @@ class Window < Gosu::Window
 
   def button_down(id)
     if id == Gosu::KbSpace
-      @gun_sample.play
+      @gun_sample.play if sounds_enabled?
 
       x, y = calculate_bullet_start_position
 
@@ -85,5 +88,9 @@ class Window < Gosu::Window
     end
 
     return x, y
+  end
+
+  def sounds_enabled?
+    return @sounds_enabled
   end
 end
