@@ -20,6 +20,6 @@ class TestEnemy < Minitest::Test
     player = Player.new(nil)
     player.warp(enemy.x + 50, enemy.y)
     enemy.turn_towards player
-    assert_equal(90, enemy.angle)
+    assert_equal(2, enemy.angle)
   end
 end

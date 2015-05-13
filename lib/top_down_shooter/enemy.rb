@@ -20,6 +20,13 @@ class Enemy
   end
 
   def turn_towards(player)
-    @angle = Gosu.angle(@x, @y, player.x, player.y)
+    diff = Gosu.angle_diff(@angle, Gosu.angle(@x, @y, player.x, player.y))
+
+    if diff < 0
+      @angle += [diff, -2].max
+    else
+      @angle += [diff, 2].min
+    end
+
   end
 end
