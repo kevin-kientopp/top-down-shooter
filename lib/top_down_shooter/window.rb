@@ -35,7 +35,7 @@ class Window < Gosu::Window
 
     enemy_image = Gosu::Image.load_tiles(self, 'media/enemy.png', 16, 21, true)
     @enemies = Array.new
-    @enemies.push Enemy.new(@player.x, @player.y - 200, enemy_image)
+    @enemies.push Enemy.new(@player.x, @player.y - 200, 180, enemy_image)
   end
 
   def update

@@ -4,10 +4,9 @@ class Enemy
   attr_accessor :angle
   attr_reader :x, :y
 
-  def initialize(x, y, image)
-    @x, @y, @image = x, y, image
+  def initialize(x, y, angle, image)
+    @x, @y, @angle, @image = x, y, angle, image
     @player_tile = 0
-    @angle = 0
   end
 
   def draw
