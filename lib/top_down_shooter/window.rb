@@ -2,6 +2,7 @@ require 'gosu'
 require_relative 'player'
 require_relative 'level'
 require_relative 'bullet'
+require_relative 'enemy'
 
 class Window < Gosu::Window
   WIDTH = 640
@@ -31,6 +32,10 @@ class Window < Gosu::Window
     @bullets = Array.new
 
     @gun_sample = Gosu::Sample.new(self, 'media/Colt1911_1.ogg')
+
+    enemy_image = Gosu::Image.load_tiles(self, 'media/enemy.png', 16, 21, true)
+    @enemies = Array.new
+    @enemies.push Enemy.new(@player.x, @player.y - 200, enemy_image)
   end
 
   def update
@@ -46,6 +51,7 @@ class Window < Gosu::Window
       @player.draw
       @level.draw
       @bullets.each { |e| e.draw }
+      @enemies.each { |e| e.draw }
     end
   end
 
