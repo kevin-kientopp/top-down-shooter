@@ -44,6 +44,8 @@ class Window < Gosu::Window
     @player.move_up if button_down? Gosu::KbUp unless @player.y < 0
     @player.move_down if button_down? Gosu::KbDown unless @player.y > Level::HEIGHT
     @bullets.each { |b| b.move }
+
+    @enemies.each { |e| e.turn_towards player if e.is_aware_of? player}
   end
 
   def draw

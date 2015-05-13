@@ -14,4 +14,12 @@ class TestEnemy < Minitest::Test
     player.warp(400, 300)
     assert_equal(false, enemy.is_aware_of?(player))
   end
+
+  def test_turn_towards_player
+    enemy = Enemy.new(0, 0, nil)
+    player = Player.new(nil)
+    player.warp(enemy.x + 50, enemy.y)
+    enemy.turn_towards player
+    assert_equal(90, enemy.angle)
+  end
 end
