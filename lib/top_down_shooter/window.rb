@@ -51,7 +51,7 @@ class Window < Gosu::Window
   def draw
     translate(calculate_camera_translation(@player.x, WIDTH, Level::WIDTH), calculate_camera_translation(@player.y, HEIGHT, Level::HEIGHT)) do
       @player.draw
-      @level.draw
+      @level.draw(@bullets)
       @bullets.each { |e| e.draw }
       @enemies.each { |e| e.draw }
     end
