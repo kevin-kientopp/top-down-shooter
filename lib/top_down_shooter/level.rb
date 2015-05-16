@@ -15,6 +15,6 @@ class Level
   def draw(bullets)
     @tiles.flatten.each { |e| e.draw }
 
-    @debris.flatten.each { |e| bullets.each { |b| e.hit_by?(b)}; e.draw }
+    @debris.flatten.each { |e| bullets.delete_if { |b| e.hit_by?(b)}; e.draw }
   end
 end

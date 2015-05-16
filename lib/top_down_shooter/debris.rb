@@ -1,6 +1,6 @@
 class Debris
 
-   attr_reader :x, :y, :hp
+  attr_reader :x, :y, :hp
 
   def initialize(image, x, y, debris_type)
     @x, @y = x, y
@@ -17,8 +17,10 @@ class Debris
   end
 
   def hit_by?(bullet)
-    if Gosu::distance(@x + middle_width, @y + middle_height, bullet.x, bullet.y) < 30
-        @hp =- 1
+    if @hp > 0
+      if Gosu::distance(@x + middle_width, @y + middle_height, bullet.x, bullet.y) < 30
+        @hp =-1
+      end
     end
   end
 
@@ -27,8 +29,8 @@ class Debris
   end
 
 
-   def middle_height
-     @image[@debris_tile].height / 2
-   end
+  def middle_height
+    @image[@debris_tile].height / 2
+  end
 
 end
