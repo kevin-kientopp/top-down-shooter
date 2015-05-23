@@ -82,21 +82,6 @@ class Window < Gosu::Window
 
     x, y = rotate(x, -y, @player.x, -@player.y, @player.angle)
 
-    # case @player.angle
-    # when 0 #up
-    #   x -= gun_offset
-    #   y -= distance_from_player
-    # when 90 #right
-    #   x += distance_from_player
-    #   y -= gun_offset
-    # when 180 #down
-    #   x += gun_offset
-    #   y += distance_from_player
-    # when 270 #left
-    #   x -= distance_from_player
-    #   y += gun_offset
-    # end
-
     return x, y
   end
 
