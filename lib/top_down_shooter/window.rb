@@ -8,7 +8,7 @@ class Window < Gosu::Window
   WIDTH = 640
   HEIGHT = 480
 
-  attr_reader :bullets, :player
+  attr_reader :bullets, :player, :enemies
   attr_accessor :sounds_enabled
 
   def initialize
@@ -35,7 +35,7 @@ class Window < Gosu::Window
 
     enemy_image = Gosu::Image.load_tiles(self, 'media/enemy.png', 16, 21, true)
     @enemies = Array.new
-    @enemies.push Enemy.new(@player.x, @player.y - 200, 180, enemy_image)
+    @enemies.push Enemy.new(@player.x, @player.y - 200, 180, enemy_image, @bullet_image)
   end
 
   def update
@@ -45,7 +45,17 @@ class Window < Gosu::Window
     @player.move_down if button_down? Gosu::KbDown unless @player.y > Level::HEIGHT
     @bullets.each { |b| b.move }
 
-    @enemies.each { |e| e.turn_towards player if e.is_aware_of? player}
+    @enemies.each do |e|
+      e.bullets.each { |b| b.move }
+      if e.is_aware_of? player
+        e.turn_towards player
+        if (e.shot_cooldown <= 0)
+          e.shoot
+        else
+          e.shot_cooldown -= 1
+        end
+      end
+    end
   end
 
   def draw
@@ -53,7 +63,10 @@ class Window < Gosu::Window
       @player.draw
       @level.draw(@bullets)
       @bullets.each { |e| e.draw }
-      @enemies.each { |e| e.draw }
+      @enemies.each do |e|
+        e.draw
+        e.bullets.each { |b| b.draw }
+      end
     end
   end
 
@@ -74,6 +87,10 @@ class Window < Gosu::Window
     return axis_screen_size/2.0 - axis_position
   end
 
+  def sounds_enabled?
+    return @sounds_enabled
+  end
+
   def calculate_bullet_start_position
     distance_from_player = 15
     gun_offset = 5
@@ -83,10 +100,6 @@ class Window < Gosu::Window
     x, y = rotate(x, -y, @player.x, -@player.y, @player.angle)
 
     return x, y
-  end
-
-  def sounds_enabled?
-    return @sounds_enabled
   end
 
   def rotate(x, y, origin_x, origin_y, angle)

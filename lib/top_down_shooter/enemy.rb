@@ -1,12 +1,14 @@
 require 'gosu'
 
 class Enemy
-  attr_accessor :angle
-  attr_reader :x, :y
+  attr_accessor :angle, :shot_cooldown
+  attr_reader :x, :y, :bullets
 
-  def initialize(x, y, angle, image)
-    @x, @y, @angle, @image = x, y, angle, image
+  def initialize(x, y, angle, image, bullet_image)
+    @x, @y, @angle, @image, @bullet_image = x, y, angle, image, bullet_image
     @player_tile = 0
+    @shot_cooldown = 0
+    @bullets = Array.new
   end
 
   def draw
@@ -26,6 +28,45 @@ class Enemy
     else
       @angle += [diff, 2].min
     end
+  end
 
+  def shoot
+    x, y = calculate_bullet_start_position
+    @bullets << Bullet.new(x, y, @angle, @bullet_image)
+    @shot_cooldown = 5
+  end
+
+  private
+  def calculate_bullet_start_position
+    y_offset = -15
+    x_offset = -5
+
+    x, y = @x + x_offset, @y + y_offset
+
+    x, y = rotate(x, -y, @x, -@y, @angle)
+
+    return x, y
+  end
+
+  def rotate(x, y, origin_x, origin_y, angle)
+    p_x = x
+    p_y = y
+
+    s = Math.sin(angle * Math::PI / 180.0)
+    c = Math.cos(angle * Math::PI / 180.0)
+
+    # translate point back to origin:
+    p_x -= origin_x
+    p_y -= origin_y
+
+    # rotate point
+    xnew = p_x * c + p_y * s
+    ynew = -p_x * s + p_y * c
+
+    # translate point back:
+    p_x = xnew + origin_x
+    p_y = -ynew - origin_y
+
+    return p_x, p_y
   end
 end
