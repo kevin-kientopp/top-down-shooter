@@ -78,27 +78,51 @@ class Window < Gosu::Window
     distance_from_player = 15
     gun_offset = 5
 
-    x, y = @player.x, @player.y
+    x, y = @player.x - gun_offset, @player.y - distance_from_player
 
-    case @player.angle
-    when 0 #up
-      x -= gun_offset
-      y -= distance_from_player
-    when 90 #right
-      x += distance_from_player
-      y -= gun_offset
-    when 180 #down
-      x += gun_offset
-      y += distance_from_player
-    when 270 #left
-      x -= distance_from_player
-      y += gun_offset
-    end
+    x, y = rotate(x, -y, @player.x, -@player.y, @player.angle)
+
+    # case @player.angle
+    # when 0 #up
+    #   x -= gun_offset
+    #   y -= distance_from_player
+    # when 90 #right
+    #   x += distance_from_player
+    #   y -= gun_offset
+    # when 180 #down
+    #   x += gun_offset
+    #   y += distance_from_player
+    # when 270 #left
+    #   x -= distance_from_player
+    #   y += gun_offset
+    # end
 
     return x, y
   end
 
   def sounds_enabled?
     return @sounds_enabled
+  end
+
+  def rotate(x, y, origin_x, origin_y, angle)
+    p_x = x
+    p_y = y
+
+    s = Math.sin(angle * Math::PI / 180.0)
+    c = Math.cos(angle * Math::PI / 180.0)
+
+    # translate point back to origin:
+    p_x -= origin_x
+    p_y -= origin_y
+
+    # rotate point
+    xnew = p_x * c + p_y * s
+    ynew = -p_x * s + p_y * c
+
+    # translate point back:
+    p_x = xnew + origin_x
+    p_y = -ynew - origin_y
+
+    return p_x, p_y
   end
 end
