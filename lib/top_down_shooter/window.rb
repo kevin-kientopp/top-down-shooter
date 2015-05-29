@@ -38,9 +38,14 @@ class Window < Gosu::Window
     @enemies.push Enemy.new(@player.x, @player.y - 200, 180, enemy_image, @bullet_image)
 
     @s_key_held_down = false
+
+    @font = Gosu::Font.new(20)
+    @sounds_status_timer = 0
   end
 
   def update
+    @sounds_status_timer -= 1 if @sounds_status_timer > 0
+
     @player.move_left if button_down? Gosu::KbLeft unless @player.x < 0
     @player.move_right if button_down? Gosu::KbRight unless @player.x > Level::WIDTH
     @player.move_up if button_down? Gosu::KbUp unless @player.y < 0
@@ -62,11 +67,13 @@ class Window < Gosu::Window
     if (Gosu::button_down? Gosu::KbLeftControl or Gosu::button_down? Gosu::KbRightControl) and Gosu::button_down? Gosu::KbS and !s_key_held_down? then
       @s_key_held_down = true
       @sounds_enabled = !@sounds_enabled
-      puts sounds_enabled?
+      @sounds_status_timer = 120
     end
   end
 
   def draw
+    @font.draw("Sound " + (sounds_enabled? ? "enabled" : "disabled"), 10, 10, 3, 1.0, 1.0, 0xff_ffff00) if @sounds_status_timer > 0
+
     translate(calculate_camera_translation(@player.x, WIDTH, Level::WIDTH), calculate_camera_translation(@player.y, HEIGHT, Level::HEIGHT)) do
       @player.draw
       @level.draw(@bullets)
