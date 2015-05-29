@@ -36,6 +36,8 @@ class Window < Gosu::Window
     enemy_image = Gosu::Image.load_tiles(self, 'media/enemy.png', 16, 21, true)
     @enemies = Array.new
     @enemies.push Enemy.new(@player.x, @player.y - 200, 180, enemy_image, @bullet_image)
+
+    @s_key_held_down = false
   end
 
   def update
@@ -55,6 +57,12 @@ class Window < Gosu::Window
           e.shot_cooldown -= 1
         end
       end
+    end
+
+    if (Gosu::button_down? Gosu::KbLeftControl or Gosu::button_down? Gosu::KbRightControl) and Gosu::button_down? Gosu::KbS and !s_key_held_down? then
+      @s_key_held_down = true
+      @sounds_enabled = !@sounds_enabled
+      puts sounds_enabled?
     end
   end
 
@@ -78,6 +86,10 @@ class Window < Gosu::Window
 
       @bullets.push Bullet.new(x, y, @player.angle, @bullet_image)
     end
+  end
+
+  def button_up(id)
+    @s_key_held_down = false if id == Gosu::KbS
   end
 
   private
@@ -122,5 +134,9 @@ class Window < Gosu::Window
     p_y = -ynew - origin_y
 
     return p_x, p_y
+  end
+
+  def s_key_held_down?
+    return @s_key_held_down
   end
 end
