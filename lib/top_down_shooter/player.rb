@@ -1,10 +1,13 @@
-class Player
+require_relative 'gun_wielder'
+
+class Player < GunWielder
   VELOCITY = 1
   FRAME_DELAY = 100 # ms
 
   attr_reader :x, :y, :angle
 
-  def initialize(image)
+  def initialize(image = nil, bullet_image = nil)
+    super bullet_image
     @player_tile = 0
     @image = image
     @x = @y = 0.0

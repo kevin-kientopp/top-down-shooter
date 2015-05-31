@@ -17,7 +17,10 @@ class Window < Gosu::Window
 
     @sounds_enabled = true
 
-    @player = Player.new(Gosu::Image.load_tiles(self, 'media/player.png', 16, 21, true))
+    @bullet_image = Gosu::Image.new(self, 'media/bullet.png', true)
+    @bullets = Array.new
+
+    @player = Player.new(Gosu::Image.load_tiles(self, 'media/player.png', 16, 21, true), @bullet_image)
     @player.warp(Level::WIDTH/2.0, Level::HEIGHT/2.0)
 
     tile_images = Array.new
@@ -27,9 +30,6 @@ class Window < Gosu::Window
     debris_images = Gosu::Image.load_tiles(self, 'media/debris_rocks.png', 58, 60, true)
 
     @level = Level.new tile_images, debris_images
-
-    @bullet_image = Gosu::Image.new(self, 'media/bullet.png', true)
-    @bullets = Array.new
 
     @gun_sample = Gosu::Sample.new(self, 'media/Colt1911_1.ogg')
 
@@ -56,6 +56,7 @@ class Window < Gosu::Window
       if e.is_aware_of? player
         e.turn_towards player
         if (e.shot_cooldown <= 0)
+          e.shot_cooldown = 60
           @bullets << e.shoot
         else
           e.shot_cooldown -= 1
@@ -85,9 +86,7 @@ class Window < Gosu::Window
     if id == Gosu::KbSpace
       @gun_sample.play if sounds_enabled?
 
-      x, y = calculate_bullet_start_position
-
-      @bullets.push Bullet.new(x, y, @player.angle, @bullet_image, @player)
+      @bullets << @player.shoot
     end
   end
 
@@ -104,39 +103,6 @@ class Window < Gosu::Window
 
   def sounds_enabled?
     return @sounds_enabled
-  end
-
-  def calculate_bullet_start_position
-    distance_from_player = 15
-    gun_offset = 5
-
-    x, y = @player.x - gun_offset, @player.y - distance_from_player
-
-    x, y = rotate(x, -y, @player.x, -@player.y, @player.angle)
-
-    return x, y
-  end
-
-  def rotate(x, y, origin_x, origin_y, angle)
-    p_x = x
-    p_y = y
-
-    s = Math.sin(angle * Math::PI / 180.0)
-    c = Math.cos(angle * Math::PI / 180.0)
-
-    # translate point back to origin:
-    p_x -= origin_x
-    p_y -= origin_y
-
-    # rotate point
-    xnew = p_x * c + p_y * s
-    ynew = -p_x * s + p_y * c
-
-    # translate point back:
-    p_x = xnew + origin_x
-    p_y = -ynew - origin_y
-
-    return p_x, p_y
   end
 
   def s_key_held_down?
