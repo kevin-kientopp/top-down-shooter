@@ -53,7 +53,6 @@ class Window < Gosu::Window
     @bullets.each { |b| b.move }
 
     @enemies.each do |e|
-      e.bullets.each { |b| b.move }
       if e.is_aware_of? player
         e.turn_towards player
         if (e.shot_cooldown <= 0)

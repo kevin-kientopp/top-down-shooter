@@ -2,13 +2,12 @@ require 'gosu'
 
 class Enemy
   attr_accessor :angle, :shot_cooldown
-  attr_reader :x, :y, :bullets
+  attr_reader :x, :y
 
   def initialize(x, y, angle, image, bullet_image)
     @x, @y, @angle, @image, @bullet_image = x, y, angle, image, bullet_image
     @player_tile = 0
     @shot_cooldown = 0
-    @bullets = Array.new
   end
 
   def draw
