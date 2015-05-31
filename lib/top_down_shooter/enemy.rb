@@ -31,9 +31,9 @@ class Enemy
   end
 
   def shoot
+    @shot_cooldown = 60
     x, y = calculate_bullet_start_position
-    @bullets << Bullet.new(x, y, @angle, @bullet_image)
-    @shot_cooldown = 5
+    return Bullet.new(x, y, @angle, @bullet_image)
   end
 
   private

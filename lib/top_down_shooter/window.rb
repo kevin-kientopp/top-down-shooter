@@ -57,7 +57,7 @@ class Window < Gosu::Window
       if e.is_aware_of? player
         e.turn_towards player
         if (e.shot_cooldown <= 0)
-          e.shoot
+          @bullets << e.shoot
         else
           e.shot_cooldown -= 1
         end
@@ -78,10 +78,7 @@ class Window < Gosu::Window
       @player.draw
       @level.draw(@bullets)
       @bullets.each { |e| e.draw }
-      @enemies.each do |e|
-        e.draw
-        e.bullets.each { |b| b.draw }
-      end
+      @enemies.each { |e| e.draw }
     end
   end
 
