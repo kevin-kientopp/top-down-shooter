@@ -61,6 +61,6 @@ class TestWindow < Minitest::Test
     window.sounds_enabled = false
     window.update
 
-    assert_equal(1, window.enemies.first.bullets.size)
+    assert_equal(window.enemies.first, window.bullets.first.fired_by)
   end
 end
