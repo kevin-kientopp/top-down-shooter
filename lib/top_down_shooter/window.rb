@@ -87,7 +87,7 @@ class Window < Gosu::Window
 
       x, y = calculate_bullet_start_position
 
-      @bullets.push Bullet.new(x, y, @player.angle, @bullet_image)
+      @bullets.push Bullet.new(x, y, @player.angle, @bullet_image, @player)
     end
   end
 

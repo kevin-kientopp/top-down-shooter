@@ -32,7 +32,7 @@ class Enemy
   def shoot
     @shot_cooldown = 60
     x, y = calculate_bullet_start_position
-    return Bullet.new(x, y, @angle, @bullet_image)
+    return Bullet.new(x, y, @angle, @bullet_image, self)
   end
 
   private
