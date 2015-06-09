@@ -9,7 +9,7 @@ class Window < Gosu::Window
   HEIGHT = 480
 
   attr_reader :bullets, :player, :enemies
-  attr_accessor :sounds_enabled
+  attr_writer :sounds_enabled
 
   def initialize
     super WIDTH, HEIGHT, false
@@ -20,7 +20,7 @@ class Window < Gosu::Window
     @bullet_image = Gosu::Image.new(self, 'media/bullet.png', true)
     @bullets = Array.new
 
-    @player = Player.new(Gosu::Image.load_tiles(self, 'media/player.png', 16, 21, true), @bullet_image)
+    @player = Player.new(Gosu::Image.load_tiles(self, 'media/player.png', 16, 21, true), @bullet_image, Gosu::Image.new(self, 'media/dead_player.png', true))
     @player.warp(Level::WIDTH/2.0, Level::HEIGHT/2.0)
 
     tile_images = Array.new
@@ -69,6 +69,11 @@ class Window < Gosu::Window
       @sounds_enabled = !@sounds_enabled
       @sounds_status_timer = 120
     end
+
+    bullets_hitting_player = @bullets.select { |b| Gosu::distance(b.x, b.y, @player.x, @player.y) < 8 }
+    @player.dying_timer = 300 if !@player.dying? and !bullets_hitting_player.empty?
+    @bullets -= bullets_hitting_player
+    @player.dying_timer -= 1
   end
 
   def draw

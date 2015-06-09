@@ -5,17 +5,24 @@ class Player < GunWielder
   FRAME_DELAY = 100 # ms
 
   attr_reader :x, :y, :angle
+  attr_accessor :dying_timer
 
-  def initialize(image = nil, bullet_image = nil)
+  def initialize(image = nil, bullet_image = nil, dying_image = nil)
     super bullet_image
     @player_tile = 0
     @image = image
     @x = @y = 0.0
     @angle = 0.0
+    @dying_image = dying_image
+    @dying_timer = 0
   end
 
   def draw
-    @image[@player_tile].draw_rot(@x, @y, 1, @angle)
+    if dying?
+      @dying_image.draw_rot(@x, @y, 1, @angle) unless @dying_timer % 20 > 10
+    else
+      @image[@player_tile].draw_rot(@x, @y, 1, @angle)
+    end
   end
 
   def warp(x, y)
@@ -60,6 +67,10 @@ class Player < GunWielder
     else
       @player_tile = 0
     end
+  end
+
+  def dying?
+    @dying_timer > 0
   end
 
 end
