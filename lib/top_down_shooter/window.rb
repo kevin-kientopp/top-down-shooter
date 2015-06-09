@@ -41,6 +41,8 @@ class Window < Gosu::Window
 
     @font = Gosu::Font.new(20)
     @sounds_status_timer = 0
+
+    @dying_sample = Gosu::Sample.new(self, 'media/dying.ogg')
   end
 
   def update
@@ -71,8 +73,12 @@ class Window < Gosu::Window
     end
 
     bullets_hitting_player = @bullets.select { |b| Gosu::distance(b.x, b.y, @player.x, @player.y) < 8 }
-    @player.dying_timer = 300 if !@player.dying? and !bullets_hitting_player.empty?
-    @bullets -= bullets_hitting_player
+    if !@player.dying? and !bullets_hitting_player.empty?
+      @dying_sample.play if sounds_enabled?
+      @player.dying_timer = 300
+      @bullets -= bullets_hitting_player
+    end
+
     @player.dying_timer -= 1
   end
 
