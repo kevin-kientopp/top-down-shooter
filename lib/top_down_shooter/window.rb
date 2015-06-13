@@ -17,10 +17,11 @@ class Window < Gosu::Window
 
     @sounds_enabled = true
 
-    @bullet_image = Gosu::Image.new(self, 'media/bullet.png', true)
+    bullet_image = Gosu::Image.new(self, 'media/bullet.png', true)
     @bullets = Array.new
 
-    @player = Player.new(Gosu::Image.load_tiles(self, 'media/player.png', 16, 21, true), @bullet_image, Gosu::Image.new(self, 'media/dead_player.png', true))
+    dying_image = Gosu::Image.new(self, 'media/dead_player.png', true)
+    @player = Player.new(Gosu::Image.load_tiles(self, 'media/player.png', 16, 21, true), bullet_image, dying_image)
     @player.warp(Level::WIDTH/2.0, Level::HEIGHT/2.0)
 
     tile_images = Array.new
@@ -35,7 +36,7 @@ class Window < Gosu::Window
 
     enemy_image = Gosu::Image.load_tiles(self, 'media/enemy.png', 16, 21, true)
     @enemies = Array.new
-    @enemies.push Enemy.new(@player.x, @player.y - 200, 180, enemy_image, @bullet_image)
+    @enemies.push Enemy.new(@player.x, @player.y - 200, 180, enemy_image, bullet_image, dying_image)
 
     @s_key_held_down = false
 
@@ -55,7 +56,15 @@ class Window < Gosu::Window
     @bullets.each { |b| b.move }
 
     @enemies.each do |e|
-      if e.is_aware_of? player
+
+      bullets_hitting_enemy = @bullets.select { |b| Gosu::distance(e.x, e.y, b.x, b.y) < 8 }
+      if !e.dying? and !bullets_hitting_enemy.empty?
+        e.dying_timer = 300
+      end
+      @bullets -= bullets_hitting_enemy
+      e.dying_timer -= 1
+
+      if !e.dying? and e.is_aware_of? player
         e.turn_towards player
         if (e.shot_cooldown <= 0)
           e.shot_cooldown = 60
@@ -76,8 +85,8 @@ class Window < Gosu::Window
     if !@player.dying? and !bullets_hitting_player.empty?
       @dying_sample.play if sounds_enabled?
       @player.dying_timer = 300
-      @bullets -= bullets_hitting_player
     end
+    @bullets -= bullets_hitting_player
 
     @player.dying_timer -= 1
   end
