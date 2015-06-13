@@ -48,10 +48,10 @@ class Window < Gosu::Window
   def update
     @sounds_status_timer -= 1 if @sounds_status_timer > 0
 
-    @player.move_left if button_down? Gosu::KbLeft unless @player.x < 0
-    @player.move_right if button_down? Gosu::KbRight unless @player.x > Level::WIDTH
-    @player.move_up if button_down? Gosu::KbUp unless @player.y < 0
-    @player.move_down if button_down? Gosu::KbDown unless @player.y > Level::HEIGHT
+    @player.move_left if button_down? Gosu::KbLeft unless @player.x < 0 or @player.dying?
+    @player.move_right if button_down? Gosu::KbRight unless @player.x > Level::WIDTH or @player.dying?
+    @player.move_up if button_down? Gosu::KbUp unless @player.y < 0 or @player.dying?
+    @player.move_down if button_down? Gosu::KbDown unless @player.y > Level::HEIGHT or @player.dying?
     @bullets.each { |b| b.move }
 
     @enemies.each do |e|
