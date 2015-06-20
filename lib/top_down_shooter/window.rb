@@ -39,8 +39,6 @@ class Window < Gosu::Window
     @enemies = Array.new
     @enemies.push Enemy.new(@player.x, @player.y - 200, 180, enemy_image, bullet_image, dying_enemy_image)
 
-    @s_key_held_down = false
-
     @font = Gosu::Font.new(20)
     @sounds_status_timer = 0
 
@@ -123,9 +121,5 @@ class Window < Gosu::Window
 
   def sounds_enabled?
     return @sounds_enabled
-  end
-
-  def s_key_held_down?
-    return @s_key_held_down
   end
 end
