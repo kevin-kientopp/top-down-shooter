@@ -104,7 +104,7 @@ class Window < Gosu::Window
     when Gosu::KbLeftControl, Gosu::KbRightControl
       @ctrl_key_held_down = true
     when Gosu::KbS
-      @sounds_enabled, @sounds_status_timer = !@sounds_enabled, 120 if @ctrl_key_held_down
+      @sounds_enabled, @sounds_status_timer = !@sounds_enabled, 120 if button_down? Gosu::KbLeftControl or button_down? Gosu::KbRightControl
     end
   end
 
