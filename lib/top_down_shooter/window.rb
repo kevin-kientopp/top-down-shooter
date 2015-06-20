@@ -101,15 +101,9 @@ class Window < Gosu::Window
       @gun_sample.play if sounds_enabled?
 
       @bullets << @player.shoot
-    when Gosu::KbLeftControl, Gosu::KbRightControl
-      @ctrl_key_held_down = true
     when Gosu::KbS
       @sounds_enabled, @sounds_status_timer = !@sounds_enabled, 120 if button_down? Gosu::KbLeftControl or button_down? Gosu::KbRightControl
     end
-  end
-
-  def button_up(id)
-    @ctrl_key_held_down = false if id == Gosu::KbLeftControl or Gosu::KbRightControl
   end
 
   private
