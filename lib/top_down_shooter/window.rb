@@ -52,10 +52,10 @@ class Window < Gosu::Window
     @player.move_right if button_down? Gosu::KbRight unless @player.x > Level::WIDTH or @player.dying?
     @player.move_up if button_down? Gosu::KbUp unless @player.y < 0 or @player.dying?
     @player.move_down if button_down? Gosu::KbDown unless @player.y > Level::HEIGHT or @player.dying?
+
     @bullets.each { |b| b.move }
 
     @enemies.each do |e|
-
       bullets_hitting_enemy = @bullets.select { |b| Gosu::distance(e.x, e.y, b.x, b.y) < 8 }
       if !e.dying? and !bullets_hitting_enemy.empty?
         e.dying_timer = 300
