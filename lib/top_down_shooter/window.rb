@@ -76,12 +76,6 @@ class Window < Gosu::Window
       end
     end
 
-    if (Gosu::button_down? Gosu::KbLeftControl or Gosu::button_down? Gosu::KbRightControl) and Gosu::button_down? Gosu::KbS and !s_key_held_down? then
-      @s_key_held_down = true
-      @sounds_enabled = !@sounds_enabled
-      @sounds_status_timer = 120
-    end
-
     bullets_hitting_player = @bullets.select { |b| Gosu::distance(b.x, b.y, @player.x, @player.y) < 8 }
     if !@player.dying? and !bullets_hitting_player.empty?
       @dying_sample.play if sounds_enabled?
@@ -104,15 +98,20 @@ class Window < Gosu::Window
   end
 
   def button_down(id)
-    if id == Gosu::KbSpace
+    case id
+    when Gosu::KbSpace
       @gun_sample.play if sounds_enabled?
 
       @bullets << @player.shoot
+    when Gosu::KbLeftControl, Gosu::KbRightControl
+      @ctrl_key_held_down = true
+    when Gosu::KbS
+      @sounds_enabled, @sounds_status_timer = !@sounds_enabled, 120 if @ctrl_key_held_down
     end
   end
 
   def button_up(id)
-    @s_key_held_down = false if id == Gosu::KbS
+    @ctrl_key_held_down = false if id == Gosu::KbLeftControl or Gosu::KbRightControl
   end
 
   private
