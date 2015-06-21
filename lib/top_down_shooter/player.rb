@@ -29,28 +29,37 @@ class Player < GunWielder
     @x, @y = x, y
   end
 
-  def move_up
-    @y -= VELOCITY
+  def move_up(debris)
+    @y -= VELOCITY unless collide_with?(debris)
     @angle = 0.0
     alternate_index if frame_expired?
   end
 
-  def move_down
-    @y += VELOCITY
+  def move_down(debris)
+    @y += VELOCITY unless collide_with?(debris)
     @angle = 180.0
     alternate_index if frame_expired?
   end
 
-  def move_left
-    @x -= VELOCITY
+  def move_left(debris)
+    @x -= VELOCITY unless collide_with?(debris)
     @angle = 270.0
     alternate_index if frame_expired?
   end
 
-  def move_right
-    @x += VELOCITY
+  def move_right(debris)
+    @x += VELOCITY unless collide_with?(debris)
     @angle = 90.0
     alternate_index if frame_expired?
+  end
+
+  def collide_with?(debris)
+    debris.flatten.each do |singleDebris|
+      if Gosu::distance(@x + middle_width, @y + middle_height, singleDebris.x + singleDebris.middle_width, singleDebris.y + singleDebris.middle_height) < 25
+        return true
+      end
+    end
+    false
   end
 
   def frame_expired?
@@ -71,6 +80,15 @@ class Player < GunWielder
 
   def dying?
     @dying_timer > 0
+  end
+
+  def middle_width
+    @image[@player_tile].width / 2
+  end
+
+
+  def middle_height
+    @image[@player_tile].height / 2
   end
 
 end

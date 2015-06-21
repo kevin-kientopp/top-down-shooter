@@ -5,6 +5,8 @@ class Level
   WIDTH = 20*Tile::WIDTH
   HEIGHT = 20*Tile::HEIGHT
 
+  attr_reader :debris
+
   def initialize(images, debris_images)
     random = Random.new
 
@@ -13,8 +15,17 @@ class Level
   end
 
   def draw(bullets)
-    @tiles.flatten.each { |e| e.draw }
+    @tiles.flatten.each { |tile| tile.draw }
 
-    @debris.flatten.each { |e| bullets.delete_if { |b| e.hit_by?(b)}; e.draw }
+    @debris.each do |arrayOfDebris|
+      arrayOfDebris.delete_if do |singleDebris, single_debris_hit_by|
+        bullets.delete_if do |bullet|
+          single_debris_hit_by = singleDebris.hit_by?(bullet)
+          single_debris_hit_by
+        end
+        singleDebris.draw
+        single_debris_hit_by
+      end
+    end
   end
 end

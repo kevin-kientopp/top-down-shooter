@@ -37,7 +37,7 @@ class Window < Gosu::Window
     enemy_image = Gosu::Image.load_tiles(self, 'media/enemy.png', 16, 21, true)
     dying_enemy_image = Gosu::Image.new(self, 'media/dead_enemy.png', true)
     @enemies = Array.new
-    @enemies.push Enemy.new(@player.x, @player.y - 200, 180, enemy_image, bullet_image, dying_enemy_image)
+   # @enemies.push Enemy.new(@player.x, @player.y - 200, 180, enemy_image, bullet_image, dying_enemy_image)
 
     @font = Gosu::Font.new(20)
     @sounds_status_timer = 0
@@ -48,10 +48,10 @@ class Window < Gosu::Window
   def update
     @sounds_status_timer -= 1 if @sounds_status_timer > 0
 
-    @player.move_left if button_down? Gosu::KbLeft unless @player.x < 0 or @player.dying?
-    @player.move_right if button_down? Gosu::KbRight unless @player.x > Level::WIDTH or @player.dying?
-    @player.move_up if button_down? Gosu::KbUp unless @player.y < 0 or @player.dying?
-    @player.move_down if button_down? Gosu::KbDown unless @player.y > Level::HEIGHT or @player.dying?
+    @player.move_left(@level.debris) if button_down? Gosu::KbLeft unless @player.x < 0 or @player.dying?
+    @player.move_right(@level.debris) if button_down? Gosu::KbRight unless @player.x > Level::WIDTH or @player.dying?
+    @player.move_up(@level.debris) if button_down? Gosu::KbUp unless @player.y < 0 or @player.dying?
+    @player.move_down(@level.debris) if button_down? Gosu::KbDown unless @player.y > Level::HEIGHT or @player.dying?
 
     @bullets.each { |b| b.move }
 
