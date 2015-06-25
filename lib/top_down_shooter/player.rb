@@ -30,36 +30,40 @@ class Player < GunWielder
   end
 
   def move_up(debris)
-    @y -= VELOCITY unless collide_with?(debris)
+    @y -= VELOCITY unless will_collide_with?(x, y - VELOCITY, debris)
     @angle = 0.0
     alternate_index if frame_expired?
   end
 
   def move_down(debris)
-    @y += VELOCITY unless collide_with?(debris)
+    @y += VELOCITY unless will_collide_with?(x, y + VELOCITY, debris)
     @angle = 180.0
     alternate_index if frame_expired?
   end
 
   def move_left(debris)
-    @x -= VELOCITY unless collide_with?(debris)
+    @x -= VELOCITY unless will_collide_with?(x - VELOCITY, y, debris)
     @angle = 270.0
     alternate_index if frame_expired?
   end
 
   def move_right(debris)
-    @x += VELOCITY unless collide_with?(debris)
+    @x += VELOCITY unless will_collide_with?(x + VELOCITY, y, debris)
     @angle = 90.0
     alternate_index if frame_expired?
   end
 
-  def collide_with?(debris)
-    debris.flatten.each do |singleDebris|
-      if Gosu::distance(@x + middle_width, @y + middle_height, singleDebris.x + singleDebris.middle_width, singleDebris.y + singleDebris.middle_height) < 25
-        return true
-      end
+  def will_collide_with?(x, y, debris)
+    return debris.flatten.any? do |singleDebris|
+      (Gosu::distance(x - middle_width, y - middle_height, singleDebris.x, singleDebris.y) < 25 or Gosu::distance(x + middle_width, y - middle_height, singleDebris.x, singleDebris.y) < 25 or Gosu::distance(x - middle_width, y + middle_height, singleDebris.x, singleDebris.y) < 25 or Gosu::distance(x + middle_width, y - middle_height, singleDebris.x, singleDebris.y) < 25)
     end
-    false
+
+    # debris.flatten.each do |singleDebris|
+    #   if Gosu::distance(@x + middle_width, @y + middle_height, singleDebris.x + singleDebris.middle_width, singleDebris.y + singleDebris.middle_height) < 25
+    #     return true
+    #   end
+    # end
+    # false
   end
 
   def frame_expired?

@@ -6,17 +6,14 @@ class Debris
     @x, @y = x, y
     @image = image
     @debris_tile = debris_type
-
   end
 
   def draw
-      @image[@debris_tile].draw(@x, @y, 1)
-
-
+    @image[@debris_tile].draw_rot(@x, @y, 1, 0)
   end
 
   def hit_by?(bullet)
-      Gosu::distance(@x + middle_width, @y + middle_height, bullet.x, bullet.y) < 30
+    Gosu::distance(@x, @y, bullet.x, bullet.y) < 30
   end
 
   def middle_width
