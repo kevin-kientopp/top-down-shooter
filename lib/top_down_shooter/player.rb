@@ -7,18 +7,18 @@ class Player < GunWielder
   attr_reader :x, :y, :angle
   attr_accessor :dying_timer, :drawer
 
-  def initialize(image = nil, bullet_image = nil, dying_image = nil)
+  def initialize(image = nil, bullet_image = nil)
     super bullet_image
     @player_tile = 0
     @image = image
     @x = @y = 0.0
     @angle = 0.0
-    @dying_image = dying_image
     @dying_timer = 0
+    @frame = 0
   end
 
   def draw
-    @drawer.draw(@x, @y, @angle)
+    @image[@frame].draw_rot(x, y, 1, angle)
   end
 
   def warp(x, y)

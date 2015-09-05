@@ -1,8 +1,10 @@
 require 'gosu'
 require_relative 'player'
+require_relative 'dying_player'
 require_relative 'level'
 require_relative 'bullet'
 require_relative 'enemy'
+require_relative 'player_drawer'
 
 class Window < Gosu::Window
   WIDTH = 640
@@ -20,8 +22,9 @@ class Window < Gosu::Window
     bullet_image = Gosu::Image.new(self, 'media/bullet.png', true)
     @bullets = Array.new
 
-    dying_image = Gosu::Image.new(self, 'media/dead_player.png', true)
-    @player = Player.new(Gosu::Image.load_tiles(self, 'media/player.png', 16, 21, true), bullet_image, dying_image)
+    @dying_image = Gosu::Image.new(self, 'media/dead_player.png', true)
+    player_images = Gosu::Image.load_tiles(self, 'media/player.png', 16, 21, true)
+    @player = Player.new(player_images, bullet_image)
     @player.warp(Level::WIDTH/2.0, Level::HEIGHT/2.0)
 
     tile_images = Array.new
@@ -77,6 +80,9 @@ class Window < Gosu::Window
     bullets_hitting_player = @bullets.select { |b| Gosu::distance(b.x, b.y, @player.x, @player.y) < 8 }
     if !@player.dying? and !bullets_hitting_player.empty?
       @dying_sample.play if sounds_enabled?
+      x, y = @player.x, @player.y
+      @player = DyingPlayer.new(@dying_image)
+      @player.warp(x, y)
       @player.dying_timer = 300
     end
     @bullets -= bullets_hitting_player

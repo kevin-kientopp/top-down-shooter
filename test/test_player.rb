@@ -36,12 +36,11 @@ class TestPlayer < Minitest::Test
   end
 
   def test_draw
-    player = Player.new(nil)
-    mock_drawer = MiniTest::Mock.new
-    mock_drawer.expect(:draw, nil, [0, 0, 0])
-    player.drawer = mock_drawer
+    mock_image = MiniTest::Mock.new
+    player = Player.new([mock_image])
+    mock_image.expect(:draw_rot, nil, [0, 0, 1, 0])
     player.draw
 
-    mock_drawer.verify
+    mock_image.verify
   end
 end
