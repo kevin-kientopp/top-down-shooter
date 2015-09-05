@@ -1,7 +1,6 @@
 require 'minitest/autorun'
 require 'minitest/mock'
 require 'top_down_shooter/dying_player_drawer.rb'
-require 'gosu'
 
 class TestDyingPlayerDrawer < Minitest::Test
   def test_draw
