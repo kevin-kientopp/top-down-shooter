@@ -1,4 +1,5 @@
 require 'minitest/autorun'
+require 'minitest/mock'
 require 'top_down_shooter/player'
 
 class TestPlayer < Minitest::Test
@@ -32,5 +33,15 @@ class TestPlayer < Minitest::Test
 
     assert_equal(-Player::VELOCITY, player.x)
     assert_equal(270, player.angle)
+  end
+
+  def test_draw
+    player = Player.new(nil)
+    mock_drawer = MiniTest::Mock.new
+    mock_drawer.expect(:draw, nil, [0, 0, 0])
+    player.drawer = mock_drawer
+    player.draw
+
+    mock_drawer.verify
   end
 end
