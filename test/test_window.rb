@@ -16,7 +16,7 @@ class TestWindow < Minitest::Test
   def test_shoot_gun_right
     window = Window.new
     window.sounds_enabled = false
-    window.player.move_right
+    window.player.move_right(Array.new)
     window.button_down Gosu::KbSpace
 
     assert_equal(1, window.bullets.size)
@@ -27,7 +27,7 @@ class TestWindow < Minitest::Test
   def test_shoot_gun_down
     window = Window.new
     window.sounds_enabled = false
-    window.player.move_down
+    window.player.move_down(Array.new)
     window.button_down Gosu::KbSpace
 
     assert_equal(1, window.bullets.size)
@@ -38,7 +38,7 @@ class TestWindow < Minitest::Test
   def test_shoot_gun_left
     window = Window.new
     window.sounds_enabled = false
-    window.player.move_left
+    window.player.move_left(Array.new)
     window.button_down Gosu::KbSpace
 
     assert_equal(1, window.bullets.size)

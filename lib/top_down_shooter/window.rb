@@ -37,7 +37,7 @@ class Window < Gosu::Window
     enemy_image = Gosu::Image.load_tiles(self, 'media/enemy.png', 16, 21, true)
     dying_enemy_image = Gosu::Image.new(self, 'media/dead_enemy.png', true)
     @enemies = Array.new
-   # @enemies.push Enemy.new(@player.x, @player.y - 200, 180, enemy_image, bullet_image, dying_enemy_image)
+    @enemies.push Enemy.new(@player.x, @player.y - 200, 180, enemy_image, bullet_image, dying_enemy_image)
 
     @font = Gosu::Font.new(20)
     @sounds_status_timer = 0
