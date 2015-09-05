@@ -4,7 +4,6 @@ require_relative 'dying_player'
 require_relative 'level'
 require_relative 'bullet'
 require_relative 'enemy'
-require_relative 'player_drawer'
 
 class Window < Gosu::Window
   WIDTH = 640
@@ -51,10 +50,10 @@ class Window < Gosu::Window
   def update
     @sounds_status_timer -= 1 if @sounds_status_timer > 0
 
-    @player.move_left(@level.debris) if button_down? Gosu::KbLeft unless @player.x < 0 or @player.dying?
-    @player.move_right(@level.debris) if button_down? Gosu::KbRight unless @player.x > Level::WIDTH or @player.dying?
-    @player.move_up(@level.debris) if button_down? Gosu::KbUp unless @player.y < 0 or @player.dying?
-    @player.move_down(@level.debris) if button_down? Gosu::KbDown unless @player.y > Level::HEIGHT or @player.dying?
+    @player.move_left(@level.debris) if button_down? Gosu::KbLeft unless @player.x < 0
+    @player.move_right(@level.debris) if button_down? Gosu::KbRight unless @player.x > Level::WIDTH
+    @player.move_up(@level.debris) if button_down? Gosu::KbUp unless @player.y < 0
+    @player.move_down(@level.debris) if button_down? Gosu::KbDown unless @player.y > Level::HEIGHT
 
     @bullets.each { |b| b.move }
 
@@ -78,7 +77,7 @@ class Window < Gosu::Window
     end
 
     bullets_hitting_player = @bullets.select { |b| Gosu::distance(b.x, b.y, @player.x, @player.y) < 8 }
-    if !@player.dying? and !bullets_hitting_player.empty?
+    if !@player.is_a? DyingPlayer and !bullets_hitting_player.empty?
       @dying_sample.play if sounds_enabled?
       x, y = @player.x, @player.y
       @player = DyingPlayer.new(@dying_image)

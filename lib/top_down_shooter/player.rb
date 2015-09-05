@@ -78,10 +78,6 @@ class Player < GunWielder
     end
   end
 
-  def dying?
-    @dying_timer > 0
-  end
-
   def middle_width
     @image[@player_tile].width / 2
   end
